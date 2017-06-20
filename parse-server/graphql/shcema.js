@@ -88,3 +88,21 @@ const createUser = {
     return user.signUp();
   }
 }
+
+var queryType = new GraphQLObjectType({
+  name: "User's queries",
+  description: "First GraphQL Server Config — Yay!",
+  fields: () => ({
+    // Queries goes here
+    user,
+    users
+  })
+});
+var mutationType = new GraphQLObjectType({
+  name: "User's mutation",
+  description: "First GraphQL Server Config — Yay!",
+  fields: () => ({
+    // Mutations goes here
+    createUser
+  })
+});
