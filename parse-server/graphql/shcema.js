@@ -61,3 +61,30 @@ const users = {
     return new Parse.Query(Parse.User).find()
   }
 }
+
+
+const createUser = {
+  type: userType,
+  description: 'Create a new user',
+  args: {
+    username: {
+      type: GraphQLString,
+      description: 'The username of the user.',
+    },
+    email: {
+      type: GraphQLString,
+      description: 'The email adress of the user.',
+    },
+    password: {
+      type: GraphQLString,
+      description: 'The password of the user.',
+    }
+  },
+  resolve: (value, { username, email, password }) => {
+    var user = new Parse.User();
+    user.set("username", username);
+    user.set("password", password);
+    user.set("email", email);
+    return user.signUp();
+  }
+}
