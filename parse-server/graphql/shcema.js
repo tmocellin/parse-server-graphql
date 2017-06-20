@@ -1,3 +1,16 @@
+import {
+  GraphQLBoolean,
+  GraphQLFloat,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} from 'graphql';
+import Parse from 'parse/node';
+
 const userType = new GraphQLObjectType({
   name: 'User',
   description: 'A simple user',
@@ -28,3 +41,23 @@ const userType = new GraphQLObjectType({
     }
   })
 });
+
+const user = {
+  type: userType,
+  args: {
+    id: {
+      description: 'The id of the user',
+      type: new GraphQLNonNull(GraphQLString)
+    }
+  },
+  resolve: (root, { id }) => {
+    return new Parse.Query(Parse.User).equalTo("objectId", id).first()
+  }
+}
+
+const users = {
+  type: new GraphQLList(userType),
+  resolve: (root) => {
+    return new Parse.Query(Parse.User).find()
+  }
+}
