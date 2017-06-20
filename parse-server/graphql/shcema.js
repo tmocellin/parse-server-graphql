@@ -106,3 +106,8 @@ var mutationType = new GraphQLObjectType({
     createUser
   })
 });
+
+export default new GraphQLSchema({
+  query: queryType,
+  mutation: mutationType,
+});
