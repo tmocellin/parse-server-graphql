@@ -10,14 +10,25 @@
   "license": "MIT",
   "dependencies": {
     "express": "~4.11.x",
+    "express-graphql": "^0.6.6",
+    "graphql": "^0.10.1",
     "kerberos": "~0.0.x",
     "parse": "~1.8.0",
     "parse-server": "*"
   },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "scripts": {
-    "start": "node index.js"
+    "start": "babel-node index.js"
   },
   "engines": {
     "node": ">=4.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1"
   }
 }

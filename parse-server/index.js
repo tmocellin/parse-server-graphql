@@ -4,6 +4,10 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
+import GraphQLHTTP from 'express-graphql';
+import schema from './graphql/schema';
+import Parse from 'parse/node';
+
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -44,6 +48,22 @@ app.get('/', function(req, res) {
 app.get('/test', function(req, res) {
   res.sendFile(path.join(__dirname, '/public/test.html'));
 });
+
+//Initialize Parse
+Parse.initialize(process.env.APP_ID || 'myAppId');
+Parse.serverURL = process.env.SERVER_URL || 'http://localhost:1337/parse';
+
+//GraphQL
+app.use(
+  '/graphql',
+  GraphQLHTTP((request) => {
+    return {
+      graphiql: true,
+      pretty: true,
+      schema: schema
+    };
+  })
+);
 
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
